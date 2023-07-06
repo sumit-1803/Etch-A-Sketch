@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-ASketch ODIN</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            font-size: larger;
+        }
+
+        div {
+            border: 2px solid black;
+            padding: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            grid-template-rows: repeat(16, 1fr);
+            gap: 1px;
+            background-color: #e0e0e0;
+            padding: 10px;
+            margin: 20px;
+        }
+
+        .cell {
+            background-color: #ffffff;
+        }
+
+        button {
+            text-decoration: none;
+            font-style: oblique;
+
+        }
+
+        /* 
+    .cell:hover{
+        background-color: red;
+    } */
+    </style>
+</head>
+
+
+
+
+
+<body>
+    <form id="myForm" class="container">
+        <label for="btn">Enter a number below 100 : </label> <!-- LABEL -->
+
+
+        <input placeholder="Size of board" id="myinput" name="myinput" style="margin-left: 15px; margin-right: 15px;"
+            type="text">
+        </input><!-- INPUT -->
+
+
+        <input type="button" id="btn1" value="Click Me!"></input>
+    </form>
+    <div style="" class="grid"></div>
+
+</body>
+
+
+
+
+<script>
+
+    const grid = document.querySelector('.grid');
+
+    grid.style.border = "2px solid black";
+
+
+    function makediv(o = '16') {
+
+        for (let i = 0; i < o; i++) {
+            for (let j = 0; j < o; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add("cell");
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    makediv();
+
+    grid.addEventListener("mouseover", function (event) {
+        event.target.style.backgroundColor = generateColor();
+    })
+    grid.addEventListener("mouseout", function (event) {
+        event.target.style.backgroundColor = "#fff";
+    })
+
+    grid.addEventListener("click", function (event) {
+
+        const cell1 = event.target;
+        cell1.style.backgroundColor = generateColor();
+
+        cell.removeEventListener("mouseout", handleMouseOut);
+
+        event.style.backgroundColor = generateColor();
+    })
+    // Catching input Value 
+    // const btn = document.querySelector('.btn');
+    let var1 = document.getElementById('myinput');
+    let btn1 = document.getElementById('btn1');
+    let number = var1.value;
+    console.log(number);
+
+    function f() {
+        const var1 = document.getElementById('myinput');
+        let number = parseInt(var1.value);
+
+        if (!isNaN(number) && number > 0 && number <= 100) {
+            const cellSize = 40; // Adjust this value to set the desired cell size
+            const gridSize = number * cellSize;
+            grid.innerHTML = "";
+            makediv(number);
+            grid.style.width = gridSize + "px";
+            grid.style.height = gridSize + "px";
+            grid.style.gridTemplateColumns = `repeat(${number}, 1fr)`;
+            grid.style.gridTemplateRows = `repeat(${number}, 1fr)`;
+        } else {
+            console.log("Invalid input");
+        }
+    }
+    btn1.addEventListener("click", f);
+
+    function generateColor() {
+        let color = '#';
+        let digits = '0123456789ABCDEF';
+        for (let i = 0; i < 6; i++) {
+            let randomDigit = Math.floor(Math.random() * 16);
+            color += digits[randomDigit];
+        }
+        console.log(color);
+        return color;
+    }
+
+
+
+</script>
+
+</html>
